@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20355FB81C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */; };
 		2059BEAD1C836B8C00537E7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEAC1C836B8C00537E7B /* AppDelegate.swift */; };
 		2059BEAF1C836B8C00537E7B /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEAE1C836B8C00537E7B /* MasterViewController.swift */; };
 		2059BEB11C836B8C00537E7B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEB01C836B8C00537E7B /* DetailViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		2059BEA91C836B8B00537E7B /* Scoops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scoops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2059BEAC1C836B8C00537E7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2059BEAE1C836B8C00537E7B /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20355FB81C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +43,7 @@
 		20355FB61C850FB600CAB9C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,6 +266,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Scoops/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adri.Scoops;
@@ -273,6 +281,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Scoops/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adri.Scoops;
