@@ -37,9 +37,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		20355FB61C850FB600CAB9C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2059BEA01C836B8B00537E7B = {
 			isa = PBXGroup;
 			children = (
+				20355FB61C850FB600CAB9C3 /* Frameworks */,
 				2059BEAB1C836B8C00537E7B /* Scoops */,
 				2059BEAA1C836B8B00537E7B /* Products */,
 			);
@@ -291,6 +299,7 @@
 				2059BEBF1C836B8C00537E7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
