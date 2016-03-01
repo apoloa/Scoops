@@ -16,6 +16,8 @@
 		2059BEB41C836B8C00537E7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB21C836B8C00537E7B /* Main.storyboard */; };
 		2059BEB61C836B8C00537E7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB51C836B8C00537E7B /* Assets.xcassets */; };
 		2059BEB91C836B8C00537E7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB71C836B8C00537E7B /* LaunchScreen.storyboard */; };
+		20E4F2E41C86374C002929D4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2E31C86374C002929D4 /* LoginViewController.swift */; };
+		20E4F2E61C864046002929D4 /* LoginTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2E51C864046002929D4 /* LoginTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		2059BEB51C836B8C00537E7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2059BEB81C836B8C00537E7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2059BEBA1C836B8C00537E7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20E4F2E31C86374C002929D4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		20E4F2E51C864046002929D4 /* LoginTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,17 +94,35 @@
 		2059BEAB1C836B8C00537E7B /* Scoops */ = {
 			isa = PBXGroup;
 			children = (
+				20E4F2E81C865868002929D4 /* Storyboards */,
+				20E4F2E71C864D6D002929D4 /* Users */,
 				20355FBE1C851FDC00CAB9C3 /* Resources */,
 				2059BEAC1C836B8C00537E7B /* AppDelegate.swift */,
 				2059BEAE1C836B8C00537E7B /* MasterViewController.swift */,
 				2059BEB01C836B8C00537E7B /* DetailViewController.swift */,
-				2059BEB21C836B8C00537E7B /* Main.storyboard */,
 				2059BEB51C836B8C00537E7B /* Assets.xcassets */,
-				2059BEB71C836B8C00537E7B /* LaunchScreen.storyboard */,
 				2059BEBA1C836B8C00537E7B /* Info.plist */,
 				20355FB91C85145600CAB9C3 /* Scoops-Bridging-Header.h */,
+				20E4F2E31C86374C002929D4 /* LoginViewController.swift */,
+				20E4F2E51C864046002929D4 /* LoginTypes.swift */,
 			);
 			path = Scoops;
+			sourceTree = "<group>";
+		};
+		20E4F2E71C864D6D002929D4 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		20E4F2E81C865868002929D4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2059BEB21C836B8C00537E7B /* Main.storyboard */,
+				2059BEB71C836B8C00537E7B /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,8 +199,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20E4F2E41C86374C002929D4 /* LoginViewController.swift in Sources */,
 				2059BEB11C836B8C00537E7B /* DetailViewController.swift in Sources */,
 				2059BEAF1C836B8C00537E7B /* MasterViewController.swift in Sources */,
+				20E4F2E61C864046002929D4 /* LoginTypes.swift in Sources */,
 				2059BEAD1C836B8C00537E7B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
