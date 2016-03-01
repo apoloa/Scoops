@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		20355FB81C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */; };
+		20355FC01C851FF000CAB9C3 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 20355FBF1C851FF000CAB9C3 /* facebook.png */; };
+		20355FC41C8527F700CAB9C3 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 20355FC31C8527F700CAB9C3 /* twitter.png */; };
 		2059BEAD1C836B8C00537E7B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEAC1C836B8C00537E7B /* AppDelegate.swift */; };
 		2059BEAF1C836B8C00537E7B /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEAE1C836B8C00537E7B /* MasterViewController.swift */; };
 		2059BEB11C836B8C00537E7B /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2059BEB01C836B8C00537E7B /* DetailViewController.swift */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		20355FB91C85145600CAB9C3 /* Scoops-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Scoops-Bridging-Header.h"; sourceTree = "<group>"; };
+		20355FBF1C851FF000CAB9C3 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		20355FC31C8527F700CAB9C3 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		2059BEA91C836B8B00537E7B /* Scoops.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scoops.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2059BEAC1C836B8C00537E7B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2059BEAE1C836B8C00537E7B /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +53,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		20355FBD1C851FD500CAB9C3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				20355FBF1C851FF000CAB9C3 /* facebook.png */,
+				20355FC31C8527F700CAB9C3 /* twitter.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		20355FBE1C851FDC00CAB9C3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				20355FBD1C851FD500CAB9C3 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		2059BEA01C836B8B00537E7B = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +90,7 @@
 		2059BEAB1C836B8C00537E7B /* Scoops */ = {
 			isa = PBXGroup;
 			children = (
+				20355FBE1C851FDC00CAB9C3 /* Resources */,
 				2059BEAC1C836B8C00537E7B /* AppDelegate.swift */,
 				2059BEAE1C836B8C00537E7B /* MasterViewController.swift */,
 				2059BEB01C836B8C00537E7B /* DetailViewController.swift */,
@@ -141,6 +163,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2059BEB91C836B8C00537E7B /* LaunchScreen.storyboard in Resources */,
+				20355FC01C851FF000CAB9C3 /* facebook.png in Resources */,
+				20355FC41C8527F700CAB9C3 /* twitter.png in Resources */,
 				2059BEB61C836B8C00537E7B /* Assets.xcassets in Resources */,
 				2059BEB41C836B8C00537E7B /* Main.storyboard in Resources */,
 			);
