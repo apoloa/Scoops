@@ -18,15 +18,11 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func facebookLogin(sender: AnyObject) {
-        client.loginWithProvider(LoginTypes.Facebook.rawValue, controller: self, animated: true) { (user:MSUser?, error:NSError?) -> Void in
-            if error != nil {
-                print("Error Logging user: \(error)")
-            } else {
-                // Save credentials
-                print("User logged \(user?.userId) with \(user?.mobileServiceAuthenticationToken)")
-                
-                
+        login(LoginTypes.Facebook, controller: self, animated: true) { (error:NSError?) -> Void in
+            if error != nil{
+                print("Error login facebook: \(error)")
             }
+            self.navigationController?.popViewControllerAnimated(true)
         }
     }
 }

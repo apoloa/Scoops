@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class NewsViewController: UITableViewController {
 
     let showLoginsSegueIdentifier = "showLogins"
     
@@ -19,22 +19,34 @@ class MasterViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        /*
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }*/
-        
-        let showLoginButton = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "showLogins:")
-        self.navigationItem.rightBarButtonItem = showLoginButton
+        if isUserLogged() {
+            // Show Logout
+            let showLogOutButton = UIBarButtonItem(title: "LogOut", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+            self.navigationItem.rightBarButtonItem = showLogOutButton
+            
+            // Show New News
+        }else{
+            // Show Login
+            let showLoginButton = UIBarButtonItem(title: "LogIn", style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
+            self.navigationItem.rightBarButtonItem = showLoginButton
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        // Works better with RXSwift
+        if isUserLogged() {
+            // Show Logout
+            let showLogOutButton = UIBarButtonItem(title: "LogOut", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
+            self.navigationItem.leftBarButtonItem = showLogOutButton
+            
+            // Show New News
+        }else{
+            // Show Login
+            let showLoginButton = UIBarButtonItem(title: "LogIn", style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
+            self.navigationItem.leftBarButtonItem = showLoginButton
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +56,12 @@ class MasterViewController: UITableViewController {
     
     func showLogins(sender: AnyObject){
         performSegueWithIdentifier(showLoginsSegueIdentifier, sender: self)
+    }
+    
+    func logout(sender: AnyObject){
+        let showLoginButton = UIBarButtonItem(title: "LogIn", style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
+        self.navigationItem.rightBarButtonItem = showLoginButton
+        removeUserInDefaults()
     }
 
     func insertNewObject(sender: AnyObject) {
