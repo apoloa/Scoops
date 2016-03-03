@@ -72,6 +72,64 @@
             </objects>
             <point key="canvasLocation" x="-1472" y="-330"/>
         </scene>
+        <!--New News View Controller-->
+        <scene sceneID="jZC-Do-0v4">
+            <objects>
+                <viewController id="6ZC-X4-4WV" customClass="NewNewsViewController" customModule="Scoops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZQc-XI-pLS"/>
+                        <viewControllerLayoutGuide type="bottom" id="ayR-nb-j8c"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gcZ-pr-AAz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="MiY-rN-POj">
+                                <rect key="frame" x="20" y="110" width="560" height="482"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-go-xce">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="233"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="233" id="kno-Lx-Xdh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
+                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                    </textView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wEd-sh-lni">
+                                        <rect key="frame" x="0.0" y="238" width="560" height="244"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lbq-xc-sns">
+                                <rect key="frame" x="20" y="72" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Lbq-xc-sns" firstAttribute="leading" secondItem="gcZ-pr-AAz" secondAttribute="leadingMargin" id="1UG-Ta-xA4"/>
+                            <constraint firstItem="MiY-rN-POj" firstAttribute="top" secondItem="Lbq-xc-sns" secondAttribute="bottom" constant="8" id="4Rt-XR-S9n"/>
+                            <constraint firstItem="Lbq-xc-sns" firstAttribute="trailing" secondItem="gcZ-pr-AAz" secondAttribute="trailingMargin" id="BCz-Zg-fxS"/>
+                            <constraint firstItem="MiY-rN-POj" firstAttribute="top" secondItem="Lbq-xc-sns" secondAttribute="bottom" constant="8" id="Cwx-U0-Hgl"/>
+                            <constraint firstItem="Lbq-xc-sns" firstAttribute="top" secondItem="ZQc-XI-pLS" secondAttribute="bottom" constant="8" id="MDP-Wp-hOx"/>
+                            <constraint firstItem="ayR-nb-j8c" firstAttribute="top" secondItem="MiY-rN-POj" secondAttribute="bottom" constant="8" id="gxC-w3-CFE"/>
+                            <constraint firstItem="MiY-rN-POj" firstAttribute="trailing" secondItem="gcZ-pr-AAz" secondAttribute="trailingMargin" id="qEe-sf-V1c"/>
+                            <constraint firstItem="MiY-rN-POj" firstAttribute="leading" secondItem="gcZ-pr-AAz" secondAttribute="leadingMargin" id="se5-fe-LDK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="newsBody" destination="xKc-go-xce" id="FuF-mG-WDb"/>
+                        <outlet property="newsImage" destination="wEd-sh-lni" id="AHW-dt-irS"/>
+                        <outlet property="newsTitle" destination="Lbq-xc-sns" id="d36-iQ-ZUx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mAI-k8-nQq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="790" y="-1318"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="jZo-nM-r8x">
             <objects>
@@ -167,11 +225,12 @@
                     <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
                     <connections>
                         <segue destination="afU-JX-6tl" kind="show" identifier="showLogins" id="DGA-6R-FkD"/>
+                        <segue destination="6ZC-X4-4WV" kind="show" identifier="addNews" id="v62-97-fj6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="93" y="-630"/>
+            <point key="canvasLocation" x="122" y="-818"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">

@@ -20,6 +20,7 @@
 		20E4F2E61C864046002929D4 /* LoginTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2E51C864046002929D4 /* LoginTypes.swift */; };
 		20E4F2EB1C865ED1002929D4 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2EA1C865ED1002929D4 /* LoginModel.swift */; };
 		20E4F2ED1C8664D1002929D4 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2EC1C8664D1002929D4 /* Resources.swift */; };
+		20E4F2F01C87B5C5002929D4 /* NewNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2EF1C87B5C5002929D4 /* NewNewsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		20E4F2E51C864046002929D4 /* LoginTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTypes.swift; sourceTree = "<group>"; };
 		20E4F2EA1C865ED1002929D4 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		20E4F2EC1C8664D1002929D4 /* Resources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		20E4F2EF1C87B5C5002929D4 /* NewNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNewsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		2059BEAB1C836B8C00537E7B /* Scoops */ = {
 			isa = PBXGroup;
 			children = (
+				20E4F2EE1C87B5AD002929D4 /* NewNews */,
 				20E4F2E91C865E87002929D4 /* Models */,
 				20E4F2E81C865868002929D4 /* Storyboards */,
 				20E4F2E71C864D6D002929D4 /* Users */,
@@ -137,6 +140,14 @@
 				20E4F2EC1C8664D1002929D4 /* Resources.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		20E4F2EE1C87B5AD002929D4 /* NewNews */ = {
+			isa = PBXGroup;
+			children = (
+				20E4F2EF1C87B5C5002929D4 /* NewNewsViewController.swift */,
+			);
+			name = NewNews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +231,7 @@
 				2059BEAF1C836B8C00537E7B /* NewsViewController.swift in Sources */,
 				20E4F2E61C864046002929D4 /* LoginTypes.swift in Sources */,
 				2059BEAD1C836B8C00537E7B /* AppDelegate.swift in Sources */,
+				20E4F2F01C87B5C5002929D4 /* NewNewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

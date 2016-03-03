@@ -11,6 +11,7 @@ import UIKit
 class NewsViewController: UITableViewController {
 
     let showLoginsSegueIdentifier = "showLogins"
+    let showNewNewsSegueIdentifier = "addNews"
     
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
@@ -18,18 +19,7 @@ class NewsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        if isUserLogged() {
-            // Show Logout
-            let showLogOutButton = UIBarButtonItem(title: "LogOut", style: UIBarButtonItemStyle.Plain, target: self, action: "logout:")
-            self.navigationItem.rightBarButtonItem = showLogOutButton
-            
-            // Show New News
-        }else{
-            // Show Login
-            let showLoginButton = UIBarButtonItem(title: "LogIn", style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
-            self.navigationItem.rightBarButtonItem = showLoginButton
-        }
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -42,6 +32,8 @@ class NewsViewController: UITableViewController {
             self.navigationItem.leftBarButtonItem = showLogOutButton
             
             // Show New News
+            let addNews = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNews:")
+            self.navigationItem.rightBarButtonItem = addNews
         }else{
             // Show Login
             let showLoginButton = UIBarButtonItem(title: "LogIn", style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
@@ -52,6 +44,10 @@ class NewsViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func addNews(sender: AnyObject){
+        performSegueWithIdentifier(showNewNewsSegueIdentifier, sender: self)
     }
     
     func showLogins(sender: AnyObject){
