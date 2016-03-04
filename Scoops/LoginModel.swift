@@ -24,6 +24,13 @@ func removeUserInDefaults(){
     
 }
 
+func loadUserFromDefaults() -> (user: String?, token:String?) {
+    let user = NSUserDefaults.standardUserDefaults().objectForKey(keyUserId) as? String
+    let token = NSUserDefaults.standardUserDefaults().objectForKey(keyTokenId) as? String
+    
+    return (user, token)
+}
+
 func isUserLogged() -> Bool{
     let userId = NSUserDefaults.standardUserDefaults().objectForKey(keyUserId)
     if let _ = userId {
