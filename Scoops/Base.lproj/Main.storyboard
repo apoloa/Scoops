@@ -80,7 +80,7 @@
                         <viewControllerLayoutGuide type="top" id="ZQc-XI-pLS"/>
                         <viewControllerLayoutGuide type="bottom" id="ayR-nb-j8c"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="gcZ-pr-AAz">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="gcZ-pr-AAz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -90,15 +90,20 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-go-xce">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="233"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="233" id="kno-Lx-Xdh"/>
-                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                         <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                     </textView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wEd-sh-lni">
+                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="wEd-sh-lni">
                                         <rect key="frame" x="0.0" y="238" width="560" height="244"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="244" id="L9N-is-o5p"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="LuA-X9-kYB" appends="YES" id="PzA-lz-iJF"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                             </stackView>
@@ -127,6 +132,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAI-k8-nQq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="LuA-X9-kYB" userLabel="Tap Add Photo">
+                    <connections>
+                        <action selector="addImage:" destination="6ZC-X4-4WV" id="R3n-W1-g2p"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="790" y="-1318"/>
         </scene>
@@ -250,6 +260,7 @@
     </scenes>
     <resources>
         <image name="facebook.png" width="512" height="512"/>
+        <image name="photo_placeholder.png" width="512" height="512"/>
         <image name="twitter.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>

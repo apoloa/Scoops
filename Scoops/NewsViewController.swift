@@ -20,6 +20,10 @@ class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let client = MSClient.currentClient()
+        
+       
+        
     }
 
     override func viewWillAppear(animated: Bool) {

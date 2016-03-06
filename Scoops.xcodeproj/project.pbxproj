@@ -16,6 +16,9 @@
 		2059BEB41C836B8C00537E7B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB21C836B8C00537E7B /* Main.storyboard */; };
 		2059BEB61C836B8C00537E7B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB51C836B8C00537E7B /* Assets.xcassets */; };
 		2059BEB91C836B8C00537E7B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2059BEB71C836B8C00537E7B /* LaunchScreen.storyboard */; };
+		206231B51C89B7E600C57A6A /* photo_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 206231B41C89B7E600C57A6A /* photo_placeholder.png */; };
+		206231B71C8B4FC700C57A6A /* Azure Storage Client Library.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 206231B61C8B4FC700C57A6A /* Azure Storage Client Library.framework */; };
+		2088F5E51C8B5A8900DF893B /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2088F5E41C8B5A8900DF893B /* libxml2.2.tbd */; };
 		20E4F2E41C86374C002929D4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2E31C86374C002929D4 /* LoginViewController.swift */; };
 		20E4F2E61C864046002929D4 /* LoginTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2E51C864046002929D4 /* LoginTypes.swift */; };
 		20E4F2EB1C865ED1002929D4 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E4F2EA1C865ED1002929D4 /* LoginModel.swift */; };
@@ -42,6 +45,9 @@
 		2059BEB51C836B8C00537E7B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2059BEB81C836B8C00537E7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2059BEBA1C836B8C00537E7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		206231B41C89B7E600C57A6A /* photo_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo_placeholder.png; sourceTree = "<group>"; };
+		206231B61C8B4FC700C57A6A /* Azure Storage Client Library.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Azure Storage Client Library.framework"; sourceTree = "<group>"; };
+		2088F5E41C8B5A8900DF893B /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		20E4F2E31C86374C002929D4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		20E4F2E51C864046002929D4 /* LoginTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTypes.swift; sourceTree = "<group>"; };
 		20E4F2EA1C865ED1002929D4 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -58,8 +64,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2088F5E51C8B5A8900DF893B /* libxml2.2.tbd in Frameworks */,
 				20355FB81C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework in Frameworks */,
 				20E4F2F41C891D3B002929D4 /* MapKit.framework in Frameworks */,
+				206231B71C8B4FC700C57A6A /* Azure Storage Client Library.framework in Frameworks */,
 				EC27C2F1769C56C955B5D6C4 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +78,8 @@
 		20355FB61C850FB600CAB9C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2088F5E41C8B5A8900DF893B /* libxml2.2.tbd */,
+				206231B61C8B4FC700C57A6A /* Azure Storage Client Library.framework */,
 				20E4F2F31C891D3B002929D4 /* MapKit.framework */,
 				20355FB71C8510FE00CAB9C3 /* WindowsAzureMobileServices.framework */,
 				75FE06E8E6C4AD9523D5D6A7 /* Pods.framework */,
@@ -80,6 +90,7 @@
 		20355FBD1C851FD500CAB9C3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				206231B41C89B7E600C57A6A /* photo_placeholder.png */,
 				20355FBF1C851FF000CAB9C3 /* facebook.png */,
 				20355FC31C8527F700CAB9C3 /* twitter.png */,
 			);
@@ -250,6 +261,7 @@
 				20355FC01C851FF000CAB9C3 /* facebook.png in Resources */,
 				20355FC41C8527F700CAB9C3 /* twitter.png in Resources */,
 				2059BEB61C836B8C00537E7B /* Assets.xcassets in Resources */,
+				206231B51C89B7E600C57A6A /* photo_placeholder.png in Resources */,
 				2059BEB41C836B8C00537E7B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

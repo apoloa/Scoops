@@ -3,3 +3,4 @@
 //
 // Bridbging - Headers for Windows Azure Mobile Services
 #import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
+#import <Azure Storage Client Library/Azure_Storage_Client_Library.h>

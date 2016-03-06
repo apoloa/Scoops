@@ -11,19 +11,21 @@ import MapKit
 import RxSwift
 import RxCocoa
 
-class NewNewsViewController: UIViewController {
+class NewNewsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var newsTitle: UITextField!
     @IBOutlet weak var newsBody: UITextView!
     @IBOutlet weak var newsImage: UIImageView!
     
     private let disposeBag = DisposeBag()
-    private var locManager = CLLocationManager()
-    
+    private var image: UIImage?{
+        didSet{
+            newsImage.image = image
+        }
+    }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        locManager.requestWhenInUseAuthorization()
         
         let saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "save:")
         self.navigationItem.rightBarButtonItem = saveButton
@@ -49,14 +51,69 @@ class NewNewsViewController: UIViewController {
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
         }
+        if let image = image {
+            let model = News(title: newsTitle.text!, text: newsBody.text!, latitude: latitude, longitude: longitude, image:image, status: StatusNews.Draft)
+            model.uploadToAzure()
+
+        }
+    
         
-        let model = News(title: newsTitle.text!, text: newsBody.text!, latitude: latitude, longitude: longitude, status: StatusNews.Draft)
-        model.uploadToAzure()
+        navigationController?.popViewControllerAnimated(true)
+        
     }
     
     func cancel(sender: AnyObject){
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func addImage(sender: AnyObject) {
+        openAlertToSelectMeansForPhoto()
+    }
+    
+    func openAlertToSelectMeansForPhoto(){
+        let alert = UIAlertController(title: "Do you want to...?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let takePhotoAction = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.launchImagePicker(UIImagePickerControllerSourceType.Camera)
+        }
+        
+        let selectPhotoLibraryAction = UIAlertAction(title: "Select from library", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.launchImagePicker(UIImagePickerControllerSourceType.PhotoLibrary)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alert.addAction(takePhotoAction)
+        alert.addAction(selectPhotoLibraryAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
         
     }
     
+    func launchImagePicker(sourceType: UIImagePickerControllerSourceType){
+        let picker =  UIImagePickerController()
+        picker.sourceType = sourceType
+        picker.delegate = self;
+        picker.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        
+        self.presentViewController(picker, animated: true) { () -> Void in
+            
+        }
+    }
     
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+        if let imageOriginal = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            image = imageOriginal
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        
+    }
 }
+
+
+
+
