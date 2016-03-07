@@ -11,6 +11,7 @@ import Foundation
 let azureMobileApplicationURL = "https://scoops-ap.azure-mobile.net/"
 let azureMobileApplicationKey = "skMbuqjSrUUqHHMkIXlJzVfwsQVbwW25"
 
+let azureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=scoopsapstore;AccountKey=2EMjjaf/9ZkI8H1is4IR65CRctkrmM3KpE15zReF0pffJ3wWsFCJRKCHfgQJYlY+R0pdPQ0lCzWxNL1/AVL6dw=="
 
 let azureBlobURL = "https://scoopsapstore.blob.core.windows.net"
 
@@ -71,5 +72,11 @@ extension MSClient {
                     }
                 }
         }
+    }
+}
+
+extension AZSCloudStorageAccount{
+    static func currentCloudStorageAccount() -> AZSCloudStorageAccount{
+        return AZSCloudStorageAccount(fromConnectionString: azureStorageConnectionString)
     }
 }

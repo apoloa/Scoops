@@ -20,8 +20,10 @@ struct News {
     let latitude : Double
     let longitude : Double
     let status : StatusNews
-    let image : UIImage
+    var image : UIImage
     let nameImage: String
+    var score: Int = 0
+    var total_likes: Int = 0
     
     init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, status: StatusNews){
         self.title = title
@@ -31,6 +33,44 @@ struct News {
         self.image = image
         self.nameImage = NSUUID().UUIDString
         self.status = status
+    }
+    
+    init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, imageName:String, status: StatusNews){
+        self.title = title
+        self.text = text
+        self.latitude = latitude
+        self.longitude = longitude
+        self.image = image
+        self.nameImage = imageName
+        self.status = status
+    }
+    
+    init(dictionary : NSDictionary){
+        self.title = dictionary["title"] as! String
+        self.text = dictionary["text"] as! String
+        self.latitude = dictionary["latitude"] as! Double
+        self.longitude = dictionary["longitude"] as! Double
+        self.status = StatusNews(rawValue: dictionary["status"] as! Int)!
+        self.nameImage = dictionary["photo"] as! String
+        self.score = dictionary["score"] as! Int
+        self.total_likes = dictionary["total_likes"] as! Int
+        let client = MSClient.currentClient()
+        client.getSASBlobUrl(self.nameImage) { (error:NSError?, url:NSURL?) -> Void in
+            if error != nil{
+                print("Error GetSASBlobl \(error)")
+            }else{
+                let container = AZSCloudBlobContainer(url: url!)
+                let blobLocal = container.blockBlobReferenceFromName(self.nameImage)
+                blobLocal.downloadToDataWithCompletionHandler({ (error: NSError?, data: NSData?) -> Void in
+                    if error != nil {
+                        print("Error getting blob \(error)")
+                    }else{
+                        self.image = UIImage(data: data!)!
+                    }
+                    
+                })
+        }
+        
     }
 }
 
