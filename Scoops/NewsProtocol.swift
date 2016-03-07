@@ -12,9 +12,9 @@ protocol NewsViewModelType: class{
     
     var numberOfSections: Int { get }
     
-    var numberOfRowsInSection: Int { get }
-    
     subscript(section: Int) -> String { get }
+    
+    subscript(section: Int) -> Int { get }
     
     subscript(section sect: Int , row: Int) -> News { get }
     

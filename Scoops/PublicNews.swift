@@ -41,8 +41,8 @@ class PublicNews : NewsViewModelType {
             return 1
         }
     }
-    
-    var numberOfRowsInSection: Int { get {
+        
+    subscript(section: Int) -> Int { get{
             return news.count
         }
     }

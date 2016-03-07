@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 enum StatusNews: Int{
     case Draft = 0
@@ -24,6 +25,7 @@ struct News {
     let nameImage: String
     var score: Int = 0
     var total_likes: Int = 0
+    var downloadedImage = false
     
     init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, status: StatusNews){
         self.title = title
@@ -54,24 +56,37 @@ struct News {
         self.nameImage = dictionary["photo"] as! String
         self.score = dictionary["score"] as! Int
         self.total_likes = dictionary["total_likes"] as! Int
-        let client = MSClient.currentClient()
-        client.getSASBlobUrl(self.nameImage) { (error:NSError?, url:NSURL?) -> Void in
-            if error != nil{
-                print("Error GetSASBlobl \(error)")
+        self.image = UIImage(named: "photo_placeholder.png")!
+    }
+    
+    mutating func getImageFromAzure() -> Observable<UIImage>{
+        return Observable.create({ (observer) in
+            if self.downloadedImage {
+                observer.onNext(self.image)
             }else{
-                let container = AZSCloudBlobContainer(url: url!)
-                let blobLocal = container.blockBlobReferenceFromName(self.nameImage)
-                blobLocal.downloadToDataWithCompletionHandler({ (error: NSError?, data: NSData?) -> Void in
+                let account = AZSCloudStorageAccount.currentCloudStorageAccount()
+                let client = account.getBlobClient()
+                let container = client.containerReferenceFromName(azureContainerForImages)
+                let blob = container.blockBlobReferenceFromName(self.nameImage)
+                blob.downloadToDataWithCompletionHandler({ (error: NSError?, data: NSData?) -> Void in
                     if error != nil {
                         print("Error getting blob \(error)")
+                        observer.onError(error!)
                     }else{
-                        self.image = UIImage(data: data!)!
+                        let image = UIImage(data: data!)!
+                        self.image = image
+                        self.downloadedImage = true
+                        observer.onNext(image)
                     }
-                    
                 })
-        }
-        
+            }
+            return AnonymousDisposable {
+                
+            }
+        })
     }
+    
+    
 }
 
 extension News{
@@ -91,29 +106,29 @@ extension News{
                     "photo": nameImage,
                     "status":status.rawValue
                     ], completion: { (inserted, error:NSError?) -> Void in
-                    if error != nil {
-                        print("Tememos un error -> : \(error)")
-                    } else {
-                        print("Insertado")
-                        client.getSASBlobUrl(self.nameImage, completionBlock: { (error:NSError?, url:NSURL?) -> Void in
-                            if error != nil{
-                                print("Error GetSASBlobl \(error)")
-                            }else{
-                                let container = AZSCloudBlobContainer(url: url!)
-                                let blobLocal = container.blockBlobReferenceFromName(self.nameImage)
-                                if let pngData = UIImageJPEGRepresentation(self.image, 0.5){
-                                    blobLocal.uploadFromData(pngData, completionHandler: { (error: NSError?) -> Void in
-                                        if error != nil {
-                                            print("Error uploading file \(error)")
-                                        }else{
-                                            print("Uploaded files")
-                                        }
-                                    })
+                        if error != nil {
+                            print("Tememos un error -> : \(error)")
+                        } else {
+                            print("Insertado")
+                            client.getSASBlobUrl(self.nameImage, completionBlock: { (error:NSError?, url:NSURL?) -> Void in
+                                if error != nil{
+                                    print("Error GetSASBlobl \(error)")
+                                }else{
+                                    let container = AZSCloudBlobContainer(url: url!)
+                                    let blobLocal = container.blockBlobReferenceFromName(self.nameImage)
+                                    if let pngData = UIImageJPEGRepresentation(self.image, 0.5){
+                                        blobLocal.uploadFromData(pngData, completionHandler: { (error: NSError?) -> Void in
+                                            if error != nil {
+                                                print("Error uploading file \(error)")
+                                            }else{
+                                                print("Uploaded files")
+                                            }
+                                        })
+                                    }
+                                    
                                 }
-                                
-                            }
-                        })
-                    }
+                            })
+                        }
                 })
         }
     }

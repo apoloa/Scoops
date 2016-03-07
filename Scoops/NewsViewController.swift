@@ -16,22 +16,27 @@ class NewsViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
     
+    var model: NewsViewModelType = PublicNews();
+    
+    @IBAction func refreshTable(sender: AnyObject) {
+        model.populateNews { (error: NSError?) -> Void in
+            if error != nil{
+                // SHOW Error
+            }else{                
+                self.tableView.reloadData()
+                sender.endRefreshing()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let client = MSClient.currentClient()
-        let table = client.getTable(AzureTables.News)
-        
-        let query = table.query()
-        query.readWithCompletion { (result:MSQueryResult?, error:NSError?) -> Void in
-            if error != nil {
-                print("Error getting results \(error)")
+        model.populateNews { (error: NSError?) -> Void in
+            if error != nil{
+                // SHOW Error
             }else{
-                print("Results: \(result?.items)")
-                if let items = result?.items as? [NSDictionary]{
-                    print("Items: \(items)")
-                }
+                self.tableView.reloadData()
             }
         }
         
@@ -99,24 +104,26 @@ class NewsViewController: UITableViewController {
     // MARK: - Table View
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return model.numberOfSections
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return model[section]
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let cell = tableView.dequeueReusableCellWithIdentifier("NewsCell", forIndexPath: indexPath) as! NewsTableViewCell
+        var news = model[section: indexPath.section, indexPath.row]
+        cell.binding(news.title, imageObservable: news.getImageFromAzure())
         return cell
     }
     
+    
+    
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        return false
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
