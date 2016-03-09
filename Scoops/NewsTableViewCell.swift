@@ -11,17 +11,20 @@ import RxCocoa
 import RxSwift
 
 class NewsTableViewCell: UITableViewCell {
+    
+    // MARK: Outlets
+    
     @IBOutlet weak var titleNews: UILabel!
     @IBOutlet weak var imageNews: UIImageView!
     
+    // MARK: Variables
     private let disposableBag = DisposeBag()
     
+    // MARK: RxBindings
     func binding(title: String, imageObservable:Observable<UIImage>){
         titleNews.text = title;
         imageObservable.bindNext { (image : UIImage) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.imageNews.image = image
-            })
+            self.imageNews.image = image
         }.addDisposableTo(disposableBag)
     }
 }

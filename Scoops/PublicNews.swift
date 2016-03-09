@@ -10,7 +10,7 @@ import Foundation
 
 class PublicNews : NewsViewModelType {
     
-    var news : [News] = Array()
+    var news = [News]()
     
     init(){
         

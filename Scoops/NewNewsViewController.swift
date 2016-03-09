@@ -13,16 +13,20 @@ import RxCocoa
 
 class NewNewsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // MARK: - IBOutlets
     @IBOutlet weak var newsTitle: UITextField!
     @IBOutlet weak var newsBody: UITextView!
     @IBOutlet weak var newsImage: UIImageView!
     
+    // MARK: - Variables
     private let disposeBag = DisposeBag()
     private var image: UIImage?{
         didSet{
             newsImage.image = image
         }
     }
+    
+    // MARK: - SuperClass Methods
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -39,6 +43,8 @@ class NewNewsViewController: UIViewController, UIImagePickerControllerDelegate, 
         .addDisposableTo(disposeBag)
     
     }
+    
+    // MARK: - Navigations Selectors
     
     func save(sender: AnyObject){
         
@@ -66,9 +72,13 @@ class NewNewsViewController: UIViewController, UIImagePickerControllerDelegate, 
         navigationController?.popViewControllerAnimated(true)
     }
     
+    // MARK: - IBActions
+    
     @IBAction func addImage(sender: AnyObject) {
         openAlertToSelectMeansForPhoto()
     }
+    
+    // MARK: - Alert
     
     func openAlertToSelectMeansForPhoto(){
         let alert = UIAlertController(title: "Do you want to...?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)

@@ -15,7 +15,8 @@ enum StatusNews: Int{
     case Published = 2
 }
 
-struct News {
+class News {
+    var id : String?
     let title : String
     let text : String
     let latitude : Double
@@ -23,9 +24,9 @@ struct News {
     let status : StatusNews
     var image : UIImage
     let nameImage: String
-    var score: Int = 0
-    var total_likes: Int = 0
-    var downloadedImage = false
+    var score: Double = 0
+    var total_likes: Double = 0
+    var downloadedImage : Bool
     
     init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, status: StatusNews){
         self.title = title
@@ -35,6 +36,7 @@ struct News {
         self.image = image
         self.nameImage = NSUUID().UUIDString
         self.status = status
+        self.downloadedImage = false
     }
     
     init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, imageName:String, status: StatusNews){
@@ -45,43 +47,52 @@ struct News {
         self.image = image
         self.nameImage = imageName
         self.status = status
+        self.downloadedImage = false
     }
     
     init(dictionary : NSDictionary){
+        self.id = dictionary["id"] as? String
         self.title = dictionary["title"] as! String
         self.text = dictionary["text"] as! String
         self.latitude = dictionary["latitude"] as! Double
         self.longitude = dictionary["longitude"] as! Double
         self.status = StatusNews(rawValue: dictionary["status"] as! Int)!
         self.nameImage = dictionary["photo"] as! String
-        self.score = dictionary["score"] as! Int
-        self.total_likes = dictionary["total_likes"] as! Int
-        self.image = UIImage(named: "photo_placeholder.png")!
+        self.score = dictionary["score"] as! Double
+        self.total_likes = dictionary["total_likes"] as! Double
+        self.image = UIImage(named: "photo_image_empty.png")!
+        self.downloadedImage = false
     }
     
-    mutating func getImageFromAzure() -> Observable<UIImage>{
+    func getImageFromAzure() -> Observable<UIImage>{
         return Observable.create({ (observer) in
-            if self.downloadedImage {
+            if self.downloadedImage == true {
+                print("Sending Image Saved")
                 observer.onNext(self.image)
             }else{
+                observer.onNext(self.image)
                 let account = AZSCloudStorageAccount.currentCloudStorageAccount()
                 let client = account.getBlobClient()
                 let container = client.containerReferenceFromName(azureContainerForImages)
                 let blob = container.blockBlobReferenceFromName(self.nameImage)
                 blob.downloadToDataWithCompletionHandler({ (error: NSError?, data: NSData?) -> Void in
-                    if error != nil {
-                        print("Error getting blob \(error)")
-                        observer.onError(error!)
-                    }else{
-                        let image = UIImage(data: data!)!
-                        self.image = image
-                        self.downloadedImage = true
-                        observer.onNext(image)
-                    }
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        if error != nil {
+                            print("Error getting blob \(error)")
+                            observer.onError(error!)
+                        }else{
+                            let image = UIImage(data: data!)! 
+                            self.image = image
+                            print("Image Downloaded")
+                            self.downloadedImage = true
+                            observer.onNext(image)
+                        }
+                    })
+                    
                 })
             }
             return AnonymousDisposable {
-                
+                self.downloadedImage = false
             }
         })
     }
@@ -131,5 +142,12 @@ extension News{
                         }
                 })
         }
+    }
+}
+
+extension News{
+    func setPuntuation(puntuation: Double, completionBlock:CompletionBlock){
+        let client = MSClient.currentClient()
+        client.setPuntuationNews(self.id!, puntuation: puntuation, completionBlock: completionBlock)
     }
 }

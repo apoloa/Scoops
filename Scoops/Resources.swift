@@ -15,13 +15,18 @@ let azureStorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=s
 
 let azureBlobURL = "https://scoopsapstore.blob.core.windows.net"
 
-let azureCustomAPIGetSASUrlForBlob = "getsasurl"
+
+
 
 let azureContainerForImages = "images"
 
+let azureCustomAPIGetSASUrlForBlob = "getsasurl"
 let azureCustomAPIGetSASUrlForBlobParamBlobName = "blobName"
-
 let azureCustomAPIGetSASUrlForBlobParamContainerName = "ContainerName"
+
+let azureCustomAPIPostSetsScore = "setscore"
+let azureCustomAPIPostSetsScoreParamId = "id"
+let azureCustomAPIPostSetsScoreParamScore = "score"
 
 enum HTTPMethods : String{
     case GET = "GET"
@@ -70,6 +75,21 @@ extension MSClient {
                     if let url = NSURL(string: urlString){
                         completionBlock(nil,url)
                     }
+                }
+        }
+    }
+    
+    func setPuntuationNews(id:String, puntuation: Double, completionBlock:CompletionBlock){
+        self.invokeAPI(azureCustomAPIPostSetsScore,
+            body: nil,
+            HTTPMethod: HTTPMethods.POST.rawValue,
+            parameters: [azureCustomAPIPostSetsScoreParamId:id,
+                azureCustomAPIPostSetsScoreParamScore:puntuation],
+            headers: nil) { (result: AnyObject?, response: NSHTTPURLResponse?, error: NSError?) -> Void in
+                if error != nil {
+                    completionBlock(error)
+                }else{
+                    completionBlock(nil)
                 }
         }
     }
