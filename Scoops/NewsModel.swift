@@ -27,6 +27,7 @@ class News {
     var score: Double = 0
     var total_likes: Double = 0
     var downloadedImage : Bool
+    var author: String?
     
     init(title: String, text: String, latitude: Double, longitude: Double, image: UIImage, status: StatusNews){
         self.title = title
@@ -61,6 +62,7 @@ class News {
         self.score = dictionary["score"] as! Double
         self.total_likes = dictionary["total_likes"] as! Double
         self.image = UIImage(named: "photo_image_empty.png")!
+        self.author = dictionary["authorname"] as? String
         self.downloadedImage = false
     }
     
@@ -101,7 +103,7 @@ class News {
 }
 
 extension News{
-    func uploadToAzure(){
+    func uploadToAzure(completionBlock: CompletionBlock){
         let usrLogin = loadUserFromDefaults()
         if let user = usrLogin.user,
             token = usrLogin.token{
@@ -119,6 +121,7 @@ extension News{
                     ], completion: { (inserted, error:NSError?) -> Void in
                         if error != nil {
                             print("Tememos un error -> : \(error)")
+                            completionBlock(error)
                         } else {
                             print("Insertado")
                             client.getSASBlobUrl(self.nameImage, completionBlock: { (error:NSError?, url:NSURL?) -> Void in
@@ -131,8 +134,10 @@ extension News{
                                         blobLocal.uploadFromData(pngData, completionHandler: { (error: NSError?) -> Void in
                                             if error != nil {
                                                 print("Error uploading file \(error)")
+                                                completionBlock(nil)
                                             }else{
                                                 print("Uploaded files")
+                                                completionBlock(nil)
                                             }
                                         })
                                     }
