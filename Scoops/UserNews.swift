@@ -13,36 +13,47 @@ class UserNews : NewsViewModelType {
     func populateNews(completion: CompletionBlock){
         let client = MSClient.currentClient()
         let table = client.getTable(AzureTables.News)
-        
-        let query = table.query()
-        query.readWithCompletion { (result:MSQueryResult?, error:NSError?) -> Void in
+        let usrLogin = loadUserFromDefaults()
+        client.setCredentialForUser(userId: usrLogin.user!, userToken: usrLogin.token!)
+        client.getUserId { (userId:String?, error:NSError?) -> Void in
             if error != nil {
-                print("Error getting results \(error)")
-                completion(error)
+                print("Error getting user id \(error)")
             }else{
-                print("Results: \(result?.items)")
-                if let items = result?.items as? [NSDictionary]{
-                    let news = items.map({ (dictionary:NSDictionary) -> News in
-                        return News(dictionary: dictionary)
-                    })
-                    
-                    for n in news{
-                        switch n.status{
-                        case .Draft:
-                            self.draftNews.append(n)
-                            break
-                        case .Publish:
-                            self.publishNews.append(n)
-                            break
-                        case .Published:
-                            self.publishedNews.append(n)
+                let predicate = NSPredicate(format: "author == %@", userId!)
+                print("Predicate \(predicate)")
+                let query = table.queryWithPredicate(predicate)
+                query.readWithCompletion { (result:MSQueryResult?, error:NSError?) -> Void in
+                    if error != nil {
+                        print("Error getting results \(error)")
+                        completion(error)
+                    }else{
+                        print("Results: \(result?.items)")
+                        if let items = result?.items as? [NSDictionary]{
+                            let news = items.map({ (dictionary:NSDictionary) -> News in
+                                return News(dictionary: dictionary)
+                            })
+                            
+                            for n in news{
+                                switch n.status{
+                                case .Draft:
+                                    self.draftNews.append(n)
+                                    break
+                                case .Publish:
+                                    self.publishNews.append(n)
+                                    break
+                                case .Published:
+                                    self.publishedNews.append(n)
+                                }
+                            }
+                            
+                            completion(nil)
                         }
                     }
-                    
-                    completion(nil)
                 }
             }
+            
         }
+        
     }
     
     var numberOfSections: Int {
