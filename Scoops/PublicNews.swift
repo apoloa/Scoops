@@ -19,8 +19,9 @@ class PublicNews : NewsViewModelType {
     func populateNews(completion: CompletionBlock){
         let client = MSClient.currentClient()
         let table = client.getTable(AzureTables.News)
+        let predicate = NSPredicate(format: "status == %d", StatusNews.Published.rawValue)
+        let query = table.queryWithPredicate(predicate)
         
-        let query = table.query()
         query.readWithCompletion { (result:MSQueryResult?, error:NSError?) -> Void in
             if error != nil {
                 print("Error getting results \(error)")
