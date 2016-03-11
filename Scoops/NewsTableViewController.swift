@@ -152,8 +152,22 @@ class NewsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            let news = model[section: indexPath.section, indexPath.row]
+            if news.status == StatusNews.Draft{
+                let activityViewController = ActivityViewController(message: "Deleting...")
+                news.deleteFromAzure({ (error:NSError?) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        activityViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.refresh()
+                            })
+                        })
+                    })
+                })
+                presentViewController(activityViewController, animated: true, completion: nil)
+            }
+            
+           
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
@@ -178,6 +192,7 @@ class NewsTableViewController: UITableViewController {
         
         let logoutAction = UIAlertAction(title: "Logout", style: UIAlertActionStyle.Destructive) { (action: UIAlertAction) -> Void in
             self.logout(self)
+            self.model = PublicNews()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in

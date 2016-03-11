@@ -27,8 +27,13 @@ class NewsTableViewCell: UITableViewCell {
             let gradient = CAGradientLayer()
             gradient.frame = self.imageNews.frame
             gradient.colors = [UIColor(hue: 0, saturation: 0, brightness: 0, alpha: 0.4).CGColor, UIColor(hue: 0, saturation: 0, brightness: 0, alpha: 0).CGColor]
-            
+            if let sublayers = self.imageNews.layer.sublayers {
+                for layer in sublayers {
+                    layer.removeFromSuperlayer()
+                }
+            }
             self.imageNews.layer.insertSublayer(gradient, atIndex: 0)
+            
             self.imageNews.image = image
             
         }.addDisposableTo(disposableBag)

@@ -24,7 +24,7 @@ func getScoreInDefaults(id:String) -> Double?{
 
 
 func loadDictionaryScores() -> [String:Double] {
-    if let dictionary = NSUserDefaults.standardUserDefaults().objectForKey(keyUserId) as? [String:Double] {
+    if let dictionary = NSUserDefaults.standardUserDefaults().objectForKey(keyScoreDictionary) as? [String:Double] {
         return dictionary
     }
     

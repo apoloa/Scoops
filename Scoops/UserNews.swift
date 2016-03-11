@@ -19,6 +19,9 @@ class UserNews : NewsViewModelType {
             if error != nil {
                 print("Error getting user id \(error)")
             }else{
+                self.publishedNews = [News]()
+                self.draftNews = [News]()
+                self.publishNews = [News]()
                 let predicate = NSPredicate(format: "author == %@", userId!)
                 print("Predicate \(predicate)")
                 let query = table.queryWithPredicate(predicate)

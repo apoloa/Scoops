@@ -10,9 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class NewsDetailViewController: UIViewController {
-
-    // MARK: Outlets
+class NewsDetailViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    // MARK:IBOutlets
     @IBOutlet weak var imageNews: UIImageView!
     @IBOutlet weak var titleNews: UILabel!
     @IBOutlet var puntuation: [UIImageView]!
@@ -21,10 +21,12 @@ class NewsDetailViewController: UIViewController {
     
     @IBOutlet var starTap: UITapGestureRecognizer!
     @IBOutlet weak var stackPuntuation: UIStackView!
+    @IBOutlet var editTap: UITapGestureRecognizer!
     
     // MARK: Variables
     
     private let disposeBag = DisposeBag()
+    private var modifiedImage:UIImage?
     
     var news: News? {
         didSet {
@@ -32,6 +34,7 @@ class NewsDetailViewController: UIViewController {
             self.configureView()
         }
     }
+    
     
     
     // MARK: Configure View
@@ -60,22 +63,31 @@ class NewsDetailViewController: UIViewController {
                 textNews.text = news.text
                 switch news.status{
                 case .Published:
+                    editTap.enabled = false
                     textNews.editable = false
                     stackPuntuation.hidden = false
-                    if news.total_likes != 0 {
-                        drawStars(news.score/news.total_likes)
+                    if let storePuntation = getScoreInDefaults(news.id!){
+                        drawStars(storePuntation)
+                        setColorToStars()
                     }else{
-                        drawStars(0)
+                        if news.total_likes != 0 {
+                            drawStars(news.score/news.total_likes)
+                        }else{
+                            drawStars(0)
+                        }
+
                     }
                     break
                 case .Publish:
+                    editTap.enabled = false
                     textNews.editable = false
                     stackPuntuation.hidden = true
                     break
                 case .Draft:
+                    editTap.enabled = true
                     textNews.editable = true
                     stackPuntuation.hidden = true
-                    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "")
+                    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "openAlertToSelectDraftOrPublish")
                     break
                 }
             }
@@ -188,6 +200,107 @@ class NewsDetailViewController: UIViewController {
             })
         }
     }
+    
+    @IBAction func editPhoto(sender: AnyObject) {
+        openAlertToSelectMeansForPhoto()
+    }
+    
+    func launchImagePicker(sourceType: UIImagePickerControllerSourceType){
+        let picker =  UIImagePickerController()
+        picker.sourceType = sourceType
+        picker.delegate = self;
+        picker.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+        
+        self.presentViewController(picker, animated: true) { () -> Void in
+            
+        }
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
+        if let imageOriginal = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            self.modifiedImage = imageOriginal
+            self.imageNews.image = imageOriginal
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        
+    }
+    
+    func saveNews(status:StatusNews){
+        let activityViewController = ActivityViewController(message: "Uploading...")
+        self.news?.status = status
+        if let modifiedImage = modifiedImage{
+            self.news?.image = modifiedImage
+        }
+        self.news?.text = textNews.text
+        self.news?.modifyInAzure({ (error:NSError?) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                activityViewController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    if error != nil {
+                        let alertController = UIAlertController(title: "Error deleting", message:
+                            error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }else{
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+                
+            })
+            
+        })
+        presentViewController(activityViewController, animated: true, completion: nil)
+        
+    }
+    
+    // MARK: - Alert
+    
+    func openAlertToSelectMeansForPhoto(){
+        let alert = UIAlertController(title: "Do you want to...?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let takePhotoAction = UIAlertAction(title: "Take a picture", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.launchImagePicker(UIImagePickerControllerSourceType.Camera)
+        }
+        
+        let selectPhotoLibraryAction = UIAlertAction(title: "Select from library", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.launchImagePicker(UIImagePickerControllerSourceType.PhotoLibrary)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alert.addAction(takePhotoAction)
+        alert.addAction(selectPhotoLibraryAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
+    func openAlertToSelectDraftOrPublish(){
+        let alert = UIAlertController(title: "Do you want to...?", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let publishAction = UIAlertAction(title: "Publish", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.saveNews(.Publish)
+        }
+        
+        let draftAction = UIAlertAction(title: "Draft", style: UIAlertActionStyle.Default) { (action: UIAlertAction) -> Void in
+            self.saveNews(.Draft)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (action: UIAlertAction) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        alert.addAction(publishAction)
+        alert.addAction(draftAction)
+        alert.addAction(cancelAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
+        
+    }
+    
     
 }
 

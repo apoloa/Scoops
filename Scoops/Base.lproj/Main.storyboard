@@ -40,11 +40,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_image_empty.png" translatesAutoresizingMaskIntoConstraints="NO" id="DWS-F1-06r">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_image_empty.png" translatesAutoresizingMaskIntoConstraints="NO" id="DWS-F1-06r">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="346"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="346" id="nZC-qQ-egt"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="4z1-fv-i60" appends="YES" id="eZb-JQ-H71"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xg4-pb-j6C">
                                 <rect key="frame" x="20" y="72" width="472" height="144"/>
@@ -124,6 +128,7 @@
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="authorNews" destination="dZH-SK-x07" id="4CS-Tv-F6J"/>
+                        <outlet property="editTap" destination="4z1-fv-i60" id="6CZ-01-9e6"/>
                         <outlet property="imageNews" destination="DWS-F1-06r" id="UGc-LK-hlf"/>
                         <outlet property="stackPuntuation" destination="4Kg-jw-H2o" id="NVR-zj-opa"/>
                         <outlet property="starTap" destination="Lyq-hZ-GIp" id="W2F-bt-Fs2"/>
@@ -140,6 +145,11 @@
                 <tapGestureRecognizer id="Lyq-hZ-GIp">
                     <connections>
                         <action selector="handleStars:" destination="JEX-9P-axG" id="GLu-Qw-29E"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="4z1-fv-i60" userLabel="Edit Tap">
+                    <connections>
+                        <action selector="editPhoto:" destination="JEX-9P-axG" id="TVY-7h-f1M"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

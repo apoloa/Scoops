@@ -18,10 +18,10 @@ enum StatusNews: Int{
 class News {
     var id : String?
     let title : String
-    let text : String
+    var text : String
     let latitude : Double
     let longitude : Double
-    let status : StatusNews
+    var status : StatusNews
     var image : UIImage
     let nameImage: String
     var score: Double = 0
@@ -145,6 +145,57 @@ extension News{
                                 }
                             })
                         }
+                })
+        }
+    }
+    
+    func modifyInAzure(completionBlock: CompletionBlock)
+    {
+        let usrLogin = loadUserFromDefaults()
+        if let user = usrLogin.user,
+            token = usrLogin.token{
+                let client = MSClient.currentClient()
+                client.setCredentialForUser(userId: user, userToken: token)
+                let tableNews = client.getTable(.News)
+                tableNews.update(["id": self.id!,"text" : text, "status":status.rawValue], completion: { (dictionary:[NSObject : AnyObject]!, error:NSError!) -> Void in
+                    if error != nil {
+                        completionBlock(error)
+                    }else{
+                        if let pngData = UIImageJPEGRepresentation(self.image, 0.5){
+                            let account = AZSCloudStorageAccount.currentCloudStorageAccount()
+                            let client = account.getBlobClient()
+                            let container = client.containerReferenceFromName(azureContainerForImages)
+                            let blob = container.blockBlobReferenceFromName(self.nameImage)
+                            blob.uploadFromData(pngData, completionHandler: { (error: NSError?) -> Void in
+                                if error != nil {
+                                    print("Error uploading file \(error)")
+                                    completionBlock(nil)
+                                }else{
+                                    print("Uploaded files")
+                                    completionBlock(nil)
+                                }
+                            })
+                            
+                        }
+                    }
+                    
+                })
+        }
+    }
+    
+    func deleteFromAzure(completionBlock:CompletionBlock){
+        let usrLogin = loadUserFromDefaults()
+        if let user = usrLogin.user,
+            token = usrLogin.token{
+                let client = MSClient.currentClient()
+                client.setCredentialForUser(userId: user, userToken: token)
+                let tableNews = client.getTable(.News)
+                tableNews.delete(["id": self.id!], completion: { (object:AnyObject?, error:NSError!) -> Void in
+                    if error != nil {
+                        completionBlock(error)
+                    }else{
+                        completionBlock(nil)
+                    }
                 })
         }
     }
