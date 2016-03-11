@@ -28,6 +28,8 @@ let azureCustomAPIPostSetsScore = "setscore"
 let azureCustomAPIPostSetsScoreParamId = "id"
 let azureCustomAPIPostSetsScoreParamScore = "score"
 
+let azureCustomAPIGetUserId = "getuserid"
+
 enum HTTPMethods : String{
     case GET = "GET"
     case POST = "POST"
@@ -90,6 +92,23 @@ extension MSClient {
                     completionBlock(error)
                 }else{
                     completionBlock(nil)
+                }
+        }
+    }
+    
+    func getUserId(completionBlock:(String?, NSError?)->Void ){
+        self.invokeAPI(azureCustomAPIGetUserId,
+            body: nil,
+            HTTPMethod: HTTPMethods.GET.rawValue,
+            parameters: nil,
+            headers: nil) { (result: AnyObject?, response:NSHTTPURLResponse?, error:NSError?) -> Void in
+                if error != nil {
+                    print("Error getting User ID \(error)")
+                    completionBlock(nil,error)
+                }else{
+                    let userId = result!["userId"] as? String
+                    print("Working Correct \(userId)")
+                    completionBlock(userId, nil)
                 }
         }
     }

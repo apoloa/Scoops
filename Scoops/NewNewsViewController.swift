@@ -32,9 +32,11 @@ class NewNewsViewController: UIViewController, UIImagePickerControllerDelegate, 
         super.viewDidAppear(animated)
         
         let saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "save:")
+        saveButton.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem = saveButton
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
+        cancelButton.tintColor = UIColor.whiteColor()
         self.navigationItem.leftBarButtonItem = cancelButton
         
         newsTitle.rx_text.asObservable().bindNext { (value) -> Void in

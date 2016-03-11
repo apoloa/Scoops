@@ -51,19 +51,23 @@ class NewsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+        self.title = "News"
         super.viewWillAppear(animated)
         // Works better with RXSwift
         if isUserLogged() {
             // Show Logout
             let showLogOutButton = UIBarButtonItem(image: UIImage(named: "User"), style: UIBarButtonItemStyle.Plain, target: self, action: "openAlertToSelectMeansForModel:")
+            showLogOutButton.tintColor = UIColor.whiteColor()
             self.navigationItem.leftBarButtonItem = showLogOutButton
             
             // Show New News
             let addNews = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addNews:")
+            addNews.tintColor = UIColor.whiteColor()
             self.navigationItem.rightBarButtonItem = addNews
         }else{
             // Show Login
             let showLoginButton = UIBarButtonItem(image: UIImage(named: "User"), style: UIBarButtonItemStyle.Plain, target: self, action: "showLogins:")
+            showLoginButton.tintColor = UIColor.whiteColor()
             self.navigationItem.leftBarButtonItem = showLoginButton
         }
     }
@@ -110,6 +114,7 @@ class NewsTableViewController: UITableViewController {
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! NewsDetailViewController
                 controller.news = news
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+                controller.navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }

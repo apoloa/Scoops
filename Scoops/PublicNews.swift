@@ -49,7 +49,7 @@ class PublicNews : NewsViewModelType {
     }
     
     subscript(section: Int) -> String { get {
-            return ""
+            return "Last News"
         }
     }
     

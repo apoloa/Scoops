@@ -13,6 +13,11 @@ class LoginViewController: UIViewController {
     let client = MSClient(
     applicationURLString: "https://scoops-ap.azure-mobile.net/", applicationKey: "skMbuqjSrUUqHHMkIXlJzVfwsQVbwW25")
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
+    }
+    
     @IBAction func twitterLogin(sender: AnyObject) {
         
     }

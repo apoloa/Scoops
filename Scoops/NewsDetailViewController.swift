@@ -17,6 +17,7 @@ class NewsDetailViewController: UIViewController {
     @IBOutlet weak var titleNews: UILabel!
     @IBOutlet var puntuation: [UIImageView]!
     @IBOutlet weak var textNews: UITextView!
+    @IBOutlet weak var authorNews: UILabel!
     
     @IBOutlet var starTap: UITapGestureRecognizer!
     @IBOutlet weak var stackPuntuation: UIStackView!
@@ -40,12 +41,20 @@ class NewsDetailViewController: UIViewController {
         if let news = self.news {
             if let imageNews = imageNews{
                 news.getImageFromAzure().bindNext({ (image) -> Void in
+                    let gradient = CAGradientLayer()
+                    gradient.frame = imageNews.frame
+                    gradient.colors = [UIColor(hue: 0, saturation: 0, brightness: 0, alpha: 0.4).CGColor, UIColor(hue: 0, saturation: 0, brightness: 0, alpha: 0).CGColor]
+                    imageNews.layer.insertSublayer(gradient, atIndex: 0)
                     imageNews.image = image
                 }).addDisposableTo(disposeBag)
             }
             if let titleNews = titleNews{
                 titleNews.text = news.title
                 self.title = news.title
+            }
+            if let authorNews = authorNews,
+                let name = news.author{
+                    authorNews.text = name
             }
             if let textNews = textNews{
                 textNews.text = news.text
@@ -65,7 +74,7 @@ class NewsDetailViewController: UIViewController {
                     break
                 case .Draft:
                     textNews.editable = true
-                    stackPuntuation.hidden = false
+                    stackPuntuation.hidden = true
                     navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "")
                     break
                 }
@@ -150,8 +159,8 @@ class NewsDetailViewController: UIViewController {
     
     // MARK: Override Methods
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
     }
